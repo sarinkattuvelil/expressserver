@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,17 +14,33 @@
             padding: 10px;
         }
 
-        #heading, #message {
+        #heading,
+        #message {
             height: auto;
             width: auto;
             position: relative;
             padding: 10px;
         }
+
+        .cnvr-ad-ubr-iframe {
+            border: 1px solid black;
+            overflow: hidden;
+            margin: 0px;
+            padding: 0px;
+            border: none;
+            width: 320px;
+            height: 480px;
+        }
     </style>
 </head>
+
 <body>
+    <div class="cnvr-ad-ubr-iframe">
+       cnvr-ad-ubr-iframe
+    </div>
+    
     <div id="messageBox">
-        
+
         <div id="heading">
             Cursor positions
         </div>
@@ -43,12 +60,13 @@
             document.onmouseenter = getCursorXY;
             document.onclick = getCursorXY;
         }
-        
+
         function getCursorXY(e) {
             let cursorX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
             let cursorY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
             document.getElementById('message').innerHTML = document.getElementById('message').innerHTML + "<br> Event Type:" + e.type + " X:" + cursorX + ", Y:" + cursorY;
         }
-        </script>
+    </script>
 </body>
+
 </html>
