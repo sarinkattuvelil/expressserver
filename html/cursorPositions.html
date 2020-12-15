@@ -60,21 +60,44 @@
     </div>
 
     <script type="text/javascript">
-        window.onload = init;
-        function init(e) {
-            // if (window.Event) {
-            // document.captureEvents(Event.MOUSEMOVE);
-            // }
-            document.onmousemove = getCursorXY;
-            document.onmouseenter = getCursorXY;
-            document.onclick = getCursorXY;
+        let resetClientWidth = _ => {
+            let href = window.location.href;
+            let urlComponents = href.split("?");
+            if (urlComponents.length>1) {
+                let paramString = urlComponents[1];
+                let params = paramString.split(",");
+                for (let i = 0; i < params.length; i++) {
+                    let current = params[i].spli("=");
+                    if (current.length == 2) {
+                        switch (current[0]) {
+                            case "height":
+                                document.getElementsByClassName("cnvr-ad-ubr-iframe")[0].style.height = current[1];
+                                break;
+                            case "width":
+                                document.getElementsByClassName("cnvr-ad-ubr-iframe")[0].style.width = current[1];
+                                break;
+                            default:
+                            // unknown param;
+                        }
+                    }
+                }
+            }
         }
 
-        function getCursorXY(e) {
+        let _getCursorXY = e => {
             let cursorX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
             let cursorY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
             document.getElementById('message').innerHTML = document.getElementById('message').innerHTML + "<br> Event Type:" + e.type + " X:" + cursorX + ", Y:" + cursorY;
         }
+
+        let _init = e => {
+            _resetClientWidth();
+            document.onmousemove = _getCursorXY;
+            document.onmouseenter = _getCursorXY;
+            document.onclick = _getCursorXY;
+        }
+
+        window.onload = _init;
     </script>
 </body>
 
