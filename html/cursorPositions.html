@@ -62,8 +62,14 @@
     <script type="text/javascript">
         let _resetClientWidth = _ => {
             let href = window.location.href;
+            try {
+                href = decodeURIComponent(href);
+            } catch (e) {
+                console.log("error in decoding the url. proceeding with original value");
+            }
+
             let urlComponents = href.split("?");
-            if (urlComponents.length>1) {
+            if (urlComponents.length > 1) {
                 let paramString = urlComponents[1];
                 let params = paramString.split("&");
                 for (let i = 0; i < params.length; i++) {
