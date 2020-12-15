@@ -60,6 +60,8 @@
     </div>
 
     <script type="text/javascript">
+        let DELAY_TIME_IN_MILLISECONDS = 1000;
+
         let _resetClientWidth = _ => {
             let href = window.location.href;
             try {
@@ -69,9 +71,11 @@
             }
 
             let urlComponents = href.split("?");
+
             if (urlComponents.length > 1) {
                 let paramString = urlComponents[1];
                 let params = paramString.split("&");
+
                 for (let i = 0; i < params.length; i++) {
                     let current = params[i].split("=");
                     if (current.length == 2) {
@@ -83,25 +87,35 @@
                                 document.getElementsByClassName("cnvr-ad-ubr-iframe")[0].style.width = current[1];
                                 break;
                             default:
-                            // unknown param;
+                                console.log("Skipping Unknown param ::: " + params[i]);
+                                break;
                         }
                     }
                 }
             }
-        }
+        };
 
         let _getCursorXY = e => {
             let cursorX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
             let cursorY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
             document.getElementById('message').innerHTML = document.getElementById('message').innerHTML + "<br> Event Type:" + e.type + " X:" + cursorX + ", Y:" + cursorY;
-        }
+        };
 
-        let _init = e => {
-            _resetClientWidth();
+        let _initMouseEvents = _ => {
             document.onmousemove = _getCursorXY;
             document.onmouseenter = _getCursorXY;
             document.onclick = _getCursorXY;
-        }
+        };
+
+        let _delay = _ => new Promise(resolve => setTimeout(_ => resolve('resolved'), DELAY_TIME_IN_MILLISECONDS));
+
+        let _initDelayAsync = async () => await _delay();
+
+        let _init = e => {
+            _initDelayAsync()
+                .then(_resetClientWidth)
+                .then(_initMouseEvents)
+        };
 
         window.onload = _init;
     </script>
