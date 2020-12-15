@@ -65,9 +65,9 @@
             let urlComponents = href.split("?");
             if (urlComponents.length>1) {
                 let paramString = urlComponents[1];
-                let params = paramString.split(",");
+                let params = paramString.split("&");
                 for (let i = 0; i < params.length; i++) {
-                    let current = params[i].spli("=");
+                    let current = params[i].split("=");
                     if (current.length == 2) {
                         switch (current[0]) {
                             case "height":
